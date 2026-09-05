@@ -201,14 +201,10 @@ button:disabled {
     </button>
 
 </div>
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
-     const emailInput = document.getElementById("password");
-
-  
     const button = document.getElementById("submit-btn");
     const message = document.getElementById("message");
 
@@ -223,8 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (email) {
         emailInput.value = email;
-           passwordInput.value = password;
-        
     }
 
     form.addEventListener("submit", async function (event) {
@@ -277,6 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
 
 
 
