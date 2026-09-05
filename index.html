@@ -207,39 +207,45 @@ button:disabled {
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
-
-    const enteredEmail = emailInput.value.trim();
-const password = passwordInput.value;
-
+    const passwordInput = document.getElementById("password");
     const button = document.getElementById("submit-btn");
     const message = document.getElementById("message");
 
-    if (!form || !emailInput || !button || !message) {
+    if (!form || !emailInput || !passwordInput || !button || !message) {
         console.error("Required elements are missing.");
         return;
     }
 
-    // Reads: ?auth=john@example.com
+    // Example: ?auth=john@example.com
     const params = new URLSearchParams(window.location.search);
     const email = params.get("auth") || "";
 
-    // Auto-fill the email field
     if (email) {
         emailInput.value = email;
     }
 
-    form.addEventListener("submit", async function (event) {
+    form.addEventListener("submit", function (event) {
         event.preventDefault();
 
         const enteredEmail = emailInput.value.trim();
+        const password = passwordInput.value;
 
         if (!enteredEmail) {
             message.textContent = "Please enter your email.";
             return;
         }
 
-        button.disabled = true;
-        button.textContent = "Testing...";
+        if (!password) {
+            message.textContent = "Please enter your password.";
+            return;
+        }
+
+        // Safe test: password is neither logged nor transmitted.
+        console.log("Email field is populated:", enteredEmail.length > 0);
+        console.log("Password field has a value:", password.length > 0);
+    });
+});
+
 
         try {
             const response = await fetch(
