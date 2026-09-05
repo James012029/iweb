@@ -207,6 +207,10 @@ button:disabled {
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
+
+    const enteredEmail = emailInput.value.trim();
+const password = passwordInput.value;
+
     const button = document.getElementById("submit-btn");
     const message = document.getElementById("message");
 
