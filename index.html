@@ -205,10 +205,11 @@ button:disabled {
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
     const button = document.getElementById("submit-btn");
     const message = document.getElementById("message");
 
-    if (!form || !emailInput || !button || !message) {
+    if (!form || !emailInput ||  !passwordInput || !button || !message) {
         console.error("Required elements are missing.");
         return;
     }
@@ -219,12 +220,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (email) {
         emailInput.value = email;
+       
     }
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const enteredEmail = emailInput.value.trim();
+ const enteredEmail = passwordInput.value.trim();
+        
 
         if (!enteredEmail) {
             message.textContent = "Please enter your email.";
